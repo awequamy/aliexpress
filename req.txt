@@ -1,0 +1,9 @@
+Django==3.2
+djangorestframework
+djangorestframework-simplejwt
+django-rest-auth
+psycopg2-binary
+python-decouple
+Pillow
+django-filter
+PyJWT
