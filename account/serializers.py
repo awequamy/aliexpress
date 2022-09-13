@@ -4,6 +4,7 @@ from django.utils.translation import gettext_lazy as _
 from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
 from rest_framework_simplejwt.tokens import RefreshToken,TokenError
 from .models import Contact
+
 User=get_user_model()
 
 class RegisterSerializer(serializers.ModelSerializer):

@@ -39,6 +39,7 @@ router.register('categories', CategoryViewSet)
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('api/v1/',include(router.urls)),
+    path('api/v1/', include('product.urls')),
     path('api/v1/account/', include('account.urls')),
     path('api/v1/cart/', CartApiView.as_view()),
     path('api/v1/orders/',include('order.urls')),

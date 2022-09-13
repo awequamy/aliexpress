@@ -8,22 +8,22 @@ from rest_framework import permissions
 from . import serializers
 from .send_email import send_confirmation_email,send_reset_password
 from django.contrib.auth import get_user_model
-from shop_api.tasks import send_email_task
+from aliexpress.tasks import send_email_task
+# from account.send_email import send_html_email
 
 User=get_user_model()
 
 
 class RegistrationView(APIView):
-    permission_classes=(permissions.AllowAny,)
-    def post(self,request):
-        serializer=serializers.RegisterSerializer(data=request.data)
+    permission_classes = (permissions.AllowAny,)
+
+    def post(self, request):
+        serializer = serializers.RegisterSerializer(data=request.data)
         if serializer.is_valid(raise_exception=True):
-            user=serializer.save()
+            user = serializer.save()
             if user:
-                send_email_task.delay(user.email,user.activation_code)
-                # send_confirmation_email(user)
-                # просто отпрвка без парраллельности
-            return Response(serializer.data,status=201)
+                send_confirmation_email(user,)
+            return Response(serializer.data, status=201)
         return Response(status=400)
 
 class ActivationView(APIView):
@@ -86,4 +86,6 @@ class FollowSpamApi(APIView):
         serializer=serializers.SpamViewSerializer(data=request.data)
         serializer.is_valid(raise_exception=True)
         serializer.save()
+        # send_html_email()
         return Response('esheeeek!!!!!!',status=200)
+
